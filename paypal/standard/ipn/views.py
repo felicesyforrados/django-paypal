@@ -38,6 +38,7 @@ def ipn(request, item_check_callable=None):
             ipn_obj = form.save(commit = False)
         except Exception, e:
             flag = "Exception while processing. (%s)" % e
+            raise
     else:
         flag = "Invalid form. (%s)" % form.errors
  
