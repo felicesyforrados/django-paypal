@@ -18,6 +18,13 @@ ST_PP_REVERSED = 'Reversed'
 ST_PP_REWARDED = 'Rewarded'
 ST_PP_UNCLAIMED = 'Unclaimed'
 ST_PP_UNCLEARED = 'Uncleared'
+ST_PP_FAILED = 'Failed'
+ST_PP_CANCELLED_REV = 'Canceled_Reversal'
+ST_PP_EXPIRED = 'Expired'
+ST_PP_INPROGRESS = 'In-Progress'
+ST_PP_PARTIALLYREFUNDED = 'Partially_Refunded'
+ST_PP_REFUNDED = 'Refunded'
+ST_PP_VOIDED = 'Voided'
 
 try:
     from idmapper.models import SharedMemoryModel as Model
@@ -29,7 +36,7 @@ class PayPalStandardBase(Model):
     # @@@ Might want to add all these one distant day.
     # FLAG_CODE_CHOICES = (
     # PAYMENT_STATUS_CHOICES = "Canceled_ Reversal Completed Denied Expired Failed Pending Processed Refunded Reversed Voided".split()
-    PAYMENT_STATUS_CHOICES = (ST_PP_ACTIVE, ST_PP_CANCELLED, ST_PP_CLEARED, ST_PP_COMPLETED, ST_PP_DENIED, ST_PP_PAID, ST_PP_PENDING, ST_PP_PROCESSED, ST_PP_REFUSED, ST_PP_REVERSED, ST_PP_REWARDED, ST_PP_UNCLAIMED, ST_PP_UNCLEARED)
+    PAYMENT_STATUS_CHOICES = (ST_PP_ACTIVE, ST_PP_CANCELLED, ST_PP_CLEARED, ST_PP_COMPLETED, ST_PP_DENIED, ST_PP_PAID, ST_PP_PENDING, ST_PP_PROCESSED, ST_PP_REFUSED, ST_PP_REVERSED, ST_PP_REWARDED, ST_PP_UNCLAIMED, ST_PP_UNCLEARED, ST_PP_FAILED, ST_PP_CANCELLED_REV, ST_PP_EXPIRED, ST_PP_INPROGRESS, ST_PP_PARTIALLYREFUNDED, ST_PP_REFUNDED, ST_PP_VOIDED)
     # AUTH_STATUS_CHOICES = "Completed Pending Voided".split()
     # ADDRESS_STATUS_CHOICES = "confirmed unconfirmed".split()
     # PAYER_STATUS_CHOICES = "verified / unverified".split()
@@ -72,7 +79,7 @@ class PayPalStandardBase(Model):
     auth_amount = models.DecimalField(max_digits=64, decimal_places=2, default=0, blank=True, null=True)
     auth_exp = models.CharField(max_length=28, blank=True)
     auth_id = models.CharField(max_length=19, blank=True)
-    auth_status = models.CharField(max_length=9, blank=True) 
+    auth_status = models.CharField(max_length=30, blank=True) 
     exchange_rate = models.DecimalField(max_digits=64, decimal_places=16, default=0, blank=True, null=True)
     invoice = models.CharField(max_length=127, blank=True)
     item_name = models.CharField(max_length=127, blank=True)
@@ -89,7 +96,7 @@ class PayPalStandardBase(Model):
     payer_status = models.CharField(max_length=10, blank=True)
     payment_date = models.DateTimeField(blank=True, null=True, help_text="HH:MM:SS DD Mmm YY, YYYY PST")
     payment_gross = models.DecimalField(max_digits=64, decimal_places=2, default=0, blank=True, null=True)
-    payment_status = models.CharField(max_length=9, blank=True)
+    payment_status = models.CharField(max_length=30, blank=True)
     payment_type = models.CharField(max_length=7, blank=True)
     pending_reason = models.CharField(max_length=14, blank=True)
     protection_eligibility=models.CharField(max_length=32, blank=True)
