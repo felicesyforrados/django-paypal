@@ -196,7 +196,7 @@ class PayPalStandardBase(Model):
 
     def __unicode__(self):
         if self.is_transaction():
-            return self.format % ("<IPN: Transaction", self.txn_id, 'by', self.payer_id, '/', self.payer_email)
+            return "<IPN: Transaction {} by {}/{}".format(self.txn_id, self.payer_id, self.payer_email)
         else:
             return self.format % ("Recurring", self.recurring_payment_id)
         
